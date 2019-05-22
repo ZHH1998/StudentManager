@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.dao.TeacherDao">
+
+	<sql id="all">
+		teacherId,account,teacherName,password,idCard,
+		sex,teacherTitle,entryDate,birthday,status,tel,
+		secondTel,qq,email,address,schoolId,collegeId,
+		isAdmin
+	</sql>
+	
+	<sql id="query">
+		<where>
+			<if test="teacherName!=null and teacherName!=''">
+				teacherName like concat("%",#{teacherName},"%")
+			</if>
+		</where>
+	</sql>
+
+	<select id="findPageObjects" resultType="com.student.po.Teacher">
+		select 
+		<include refid="all"/>
+		from
+		tb_teacher
+		<include refid="query"/>
+		order by entryDate desc
+		limit #{startIndex},#{pageSize}
+	</select>
+
+	<select id="getRowCount" 
+			resultType="int">
+		select count(*)
+		from tb_teacher
+		<include refid="query" />
+	</select>
+	
+	<select id="findTeacherByAccount" resultType="com.student.po.Teacher">
+		select 
+		<include refid="all"/>
+		from 
+		tb_teacher
+		where
+		account=#{account}
+	</select>
+	
+	<delete id="deleteObjectsByTeacherIds">
+		delete from 
+		tb_teacher
+		where 
+		teacherId in
+		<foreach collection="teacherIds"
+				 open="("
+				 close=")"
+				 separator=","
+				 item="teacherId">
+			#{teacherId}
+		</foreach>
+	</delete>
+	
+	<update id="updateObjectByTeacherId">
+		update tb_teacher
+		set account=#{account},
+		teacherName=#{teacherName},password=#{password},
+		idCard=#{idCard},sex=#{sex},teacherTitle=#{teacherTitle},
+		entryDate=#{entryDate},birthday=#{birthday},status=#{status},
+		tel=#{tel},secondTel=#{secondTel},qq=#{qq},email=#{email},
+		address=#{address},schoolId=#{schoolId},collegeId=#{collegeId},
+		isAdmin=#{isAdmin}
+		where teacherId=#{teacherId}
+	</update>
+	
+	<insert id="insertObject">
+		insert into
+		tb_teacher
+		(<include refid="all"/>)
+		values
+		(#{teacherId},#{account},#{teacherName},#{password},#{idCard},
+		#{sex},#{teacherTitle},#{entryDate},#{birthday},#{status},#{tel},
+		#{secondTel},#{qq},#{email},#{address},#{schoolId},#{collegeId},
+		#{isAdmin})
+	</insert>
+</mapper>

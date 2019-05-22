@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>后台登录-X-admin1.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="./css/font.css">
+<link rel="stylesheet" href="./css/xadmin.css">
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+<script type="text/javascript"
+	src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+<script src="./lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="./js/xadmin.js"></script>
+
+
+</head>
+<body>
+	<!-- 右侧主体开始 -->
+	<div
+		style="width: 1000px; height: auto; padding: 20px 15px 15px; background-color: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.3); margin: 0 auto;">
+		<div>
+			<!-- 右侧内容框架，更改从这里开始 -->
+			<form class="layui-form" action="">
+				<fieldset class="layui-elem-field layui-field-title"
+					style="margin-top: 50px;">
+					<legend>完善个人资料</legend>
+				</fieldset>
+				<form class="layui-form layui-form-pane">
+
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">姓名</label>
+							<div class="layui-input-inline">
+								<input type="text" name="name" lay-verify="required"
+									placeholder="姓名" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">身份证</label>
+							<div class="layui-input-inline">
+								<input type="text" name="idCard" lay-verify="required"
+									placeholder="请输入" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">学历</label>
+							<div class="layui-input-block">
+								<select name="select" lay-filter="aihao">
+									<option value="本科">本科</option>
+									<option value="高中">高中</option>
+									<option value="大专">大专</option>
+									<option value="硕士">硕士</option>
+									<option value="博士">博士</option>
+									<option value="研究生">研究生</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">毕业院校</label>
+							<div class="layui-input-inline">
+								<input type="text" name="schoolId" autocomplete="off"
+									placeholder="请输入" class="layui-input">
+							</div>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">专业</label>
+							<div class="layui-input-inline">
+								<input type="password" name="professional" placeholder="请输入"
+									autocomplete="off" class="layui-input">
+							</div>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">入学日期</label>
+							<!-- 右侧内容框架，更改从这里开始 -->
+							<form class="layui-form xbs" action="">
+								<div class="layui-form-pane">
+									<div class="layui-form-item" style="display: inline-block;">
+										<div class="layui-input-inline xbs768">
+											<input class="layui-input" placeholder="年-月-日"
+												id="LAY_demorange_s">
+										</div>
+									</div>
+								</div>
+							</form>
+							<div class="layui-form-item">
+								<label class="layui-form-label">出生日期</label>
+								<!-- 右侧内容框架，更改从这里开始 -->
+								<form class="layui-form xbs" action="">
+									<div class="layui-form-pane">
+										<div class="layui-form-item" style="display: inline-block;">
+											<div class="layui-input-inline xbs768">
+												<input class="layui-input" placeholder="年-月-日"
+													id="LAY_demorange">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="layui-form-item">
+								<div class="layui-inline">
+									<label class="layui-form-label">状态</label>
+									<div class="layui-input-block">
+										<select name="select" lay-filter="aihao">
+											<option value="在读">在读</option>
+											<option value="毕业">毕业</option>
+											<option value="休学">休学</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">联系电话</label>
+								<div class="layui-input-inline">
+									<input type="text" name="tel" lay-verify="required"
+										placeholder="电话" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">备用电话</label>
+								<div class="layui-input-inline">
+									<input type="text" name="tel2" lay-verify="required"
+										placeholder="备用电话" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">QQ</label>
+								<div class="layui-input-inline">
+									<input type="text" name="qq" lay-verify="required"
+										placeholder="QQ" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">邮箱</label>
+								<div class="layui-input-inline">
+									<input type="text" name="email" lay-verify="required"
+										placeholder="email" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<label class="layui-form-label">详细地址</label>
+								<div class="layui-input-inline">
+									<input type="text" name="name" lay-verify="required"
+										placeholder="详细地址" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+
+							<div class="layui-form-item" pane="">
+								<label class="layui-form-label">性别</label>
+								<div class="layui-input-block">
+									<input type="radio" name="sex" value="男" title="男" checked="">
+									<input type="radio" name="sex" value="女" title="女">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">班级编号</label>
+								<div class="layui-input-inline">
+									<input type="text" name="name" lay-verify="required"
+										placeholder="班级编号" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<button class="layui-btn" type="submit">提交数据</button>
+								<button class="layui-btn" type="button" id = "do-index-ui-id">返回首页</button>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- 右侧内容框架，更改从这里结束 -->
+			</form>
+		</div>
+	</div>
+	<!-- 右侧主体结束 -->
+	</div>
+	<!-- 中部结束 -->
+	<!-- 底部开始 -->
+	<div class="footer">
+		<div class="copyright">CGB1902 ©2019. 本后台系统由深圳宝安中心提供技术支持</div>
+	</div>
+	<!-- 底部结束 -->
+	<!-- 背景切换开始 -->
+	<div class="bg-changer">
+		<div class="swiper-container changer-list">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<img class="item" src="./images/a.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/b.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/c.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/d.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/e.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/f.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/g.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/h.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/i.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/j.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/k.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<span class="reset">初始化</span>
+				</div>
+			</div>
+		</div>
+		<div class="bg-out"></div>
+		<div id="changer-set">
+			<i class="iconfont">&#xe696;</i>
+		</div>
+	</div>
+	<!-- 背景切换结束 -->
+</body>
+<script>
+	$(function(){
+		$(".layui-form-item").on("click","#do-index-ui-id",doIndexUI);
+		
+	});
+	
+	// 返回首页
+	function doIndexUI(){
+		location.href = "doIndexUI.do";
+	}
+</script>
+
+
+
+
+
+<script>
+    layui.use(['laydate'], function () {
+        laydate = layui.laydate;//日期插件
+        var start = {
+            min: '1990-01-01 23:59:59',
+            max: '2099-01-01 23:59:59',
+            istoday: false,
+            choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+
+        var end = {
+            min: '1990-01-01 23:59:59',
+            max: '2099-01-01 23:59:59',
+            istoday: false,
+            choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+        document.getElementById('LAY_demorange_s').onclick = function () {
+            start.elem = this;
+            laydate(start);
+        }
+        document.getElementById('LAY_demorange').onclick = function () {
+            end.elem = this
+            laydate(end);
+        }
+
+    });
+
+
+</script>
+
+</html>

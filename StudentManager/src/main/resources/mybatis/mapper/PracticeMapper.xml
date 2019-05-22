@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.student.dao.PracticeDao">
+	  <select id="findById" resultType="com.student.po.Practice">
+	  		select practicenames,workTime,practiceteacher,workDetails from tb_practice where practiceId=#{practiceId}
+	  </select>
+	 
+<!-- 	  <resultMap type="com.student.po.Practice" id="newPractice">
+	 	<id column="practiceId" property="practiceId"/>
+	 	<result column="workTime" property="workTime"/>
+	 	<result column="workDetails" property="workDetails"/>
+	 	
+	 	
+	 	
+	 	<association property="student" javaType="com.student.po.Student">
+	 		<result column="name" property="name"/>
+	 		<result column="classId" property="classId"/>
+	 	</association>
+	 	
+	 	<association property="xxxxxx" column="xxxxxxx"
+			select="com.student.dao.StudentDao.findStudentByIdS">
+		</association>
+	 	
+	 	
+	 	
+	 	<association property="studentPract" javaType="com.student.po.StudentPract">
+	 		<result column="studentId" property="studentId"/>
+	 		<result column="practiceId" property="practiceId"/>
+	 	</association>
+	 </resultMap>   -->
+
+
+	  	
+	  	<select id="findObject" resultType="com.student.po.Practice">
+	  		select * from tb_practice where studentId=#{studentId}
+	  	</select>
+  </mapper>
+  
+  
+  
+  
+  
+  
+  

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>后台登录-X-admin1.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="./css/font.css">
+<link rel="stylesheet" href="./css/xadmin.css">
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+<script type="text/javascript"
+	src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+<script src="./lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="./js/xadmin.js"></script>
+
+</head>
+<body>
+<br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+	<div class="wrapper">
+		<!-- 左侧菜单开始 -->
+		<div
+			style="width: 1000px; height: auto; padding: 20px 15px 15px; background-color: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.3); margin: 0 auto;">
+			<div>
+				<form class="layui-form">
+					<div class="layui-form-item">
+						<label for="level-name" class="layui-form-label"> <span
+							class="x-red">*</span>学号
+						</label>
+						<div class="layui-input-inline">
+							<input type="text" id="level-name" name="level-name" required=""
+								lay-verify="required" value="1620170223" autocomplete="off"
+								class="layui-input"
+								onkeyup="this.value=this.value.replace(/\D/g,'')">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label for="level-kiss" class="layui-form-label"> <span
+							class="x-red">*</span>学生姓名
+						</label>
+						<div class="layui-input-inline">
+							<input type="text" id="level-kiss" name="level-kiss" required=""
+								lay-verify="required" value="例如：张三" autocomplete="off"
+								class="layui-input"
+								onkeyup="this.value=this.value.replace(/\d/g,'')">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label for="level-kiss" class="layui-form-label"> <span
+							class="x-red">*</span>实习地点
+						</label>
+						<div class="layui-input-inline">
+							<input type="text" id="level-kiss" name="level-kiss" required=""
+								value="您现在工作的地方" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label for="level-kiss" class="layui-form-label"> <span
+							class="x-red">*</span>实习时间
+						</label>
+						<div class="layui-input-inline">
+							<input type="text" id="level-kiss" name="level-kiss" required=""
+								value="2019-5" autocomplete="off" class="layui-input"
+								onkeyup="this.value=this.value.replace(/\D/g,'')">
+						</div>
+					</div>
+					<div class="layui-form-item layui-form-text">
+						<label for="L_sign" class="layui-form-label"> 工作内容 </label>
+						<div class="layui-input-block">
+							<textarea placeholder="随便写些什么刷下存在感!!!" id="L_sign" name="sign"
+								autocomplete="off" class="layui-textarea" style="height: 80px;"></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item" align="center">
+						<button class="layui-btn" type="submit">提交信息</button>
+						<button class="layui-btn" type="button" id="do-index-ui-id">返回首页</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(function() {
+			$(".layui-form-item").on("click", "#do-index-ui-id", doIndexUI);
+
+		});
+
+		// 返回首页
+		function doIndexUI() {
+			location.href = "doIndexUI.do";
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.dao.WeekDiaryDao">
+	<select id="findPracticeByStudentId" resultType="com.student.po.Week">
+	select * from tb_week where studentId=#{id}
+	</select>
+	<insert id="saveWeekDiary">
+	insert into tb_week (studentId,address,dayTime,records,studentName)
+	values (#{studentId},#{address},#{dayTime},#{records},#{studentName})
+	</insert>
+</mapper>

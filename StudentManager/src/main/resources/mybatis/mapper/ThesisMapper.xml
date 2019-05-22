@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.student.dao.ThesisDao">
+  <!-- 基于ID查询所有毕业论文信息 -->
+  		<select id="findById" resultType="com.student.po.Thesis">
+  			select * from tb_thesis where thesisId=#{thesisId}
+  		</select>
+  </mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.dao.StudentDao">
+
+	<sql id="all">
+		studentId,account,name,password,idCard,
+		sex,education,schoolId,professional,acceptanceDate,
+		birthday,status,tel,secondTel,qq,email,address,
+		classId,isAdmin
+	</sql>
+	
+	<sql id="query">
+		<where>
+			<if test="name!=null and name!=''">
+				name like concat("%",#{name},"%")
+			</if>
+		</where>
+	</sql>
+
+	<select id="findPageObjects" resultType="com.student.po.Student">
+		select 
+		<include refid="all"/>
+		from
+		tb_student
+		<include refid="query"/>
+		order by acceptanceDate desc
+		limit #{startIndex},#{pageSize}
+	</select>
+
+	<select id="getRowCount" 
+			resultType="int">
+		select count(*)
+		from tb_student
+		<include refid="query" />
+	</select>
+	
+	<select id="findStudentByAccount" resultType="com.student.po.Student">
+		select 
+		<include refid="all"/>
+		from 
+		tb_student
+		where
+		account=#{account}
+	</select>
+	
+	<delete id="deleteObjectsByStudentIds">
+		delete from 
+		tb_student
+		where 
+		studentId in
+		<foreach collection="studentIds"
+				 open="("
+				 close=")"
+				 separator=","
+				 item="studentId">
+			#{studentId}
+		</foreach>
+	</delete>
+	
+	<update id="updateObjectByStudentId">
+		update tb_student
+		set account=#{account},
+		name=#{name},password=#{password},
+		idCard=#{idCard},sex=#{sex},
+		education=#{education},schoolId=#{schoolId},
+		professional=#{professional},
+		acceptanceDate=#{acceptanceDate},
+		birthday=#{birthday},status=#{status},
+		tel=#{tel},secondTel=#{secondTel},
+		qq=#{qq},email=#{email},address=#{address},
+		classId=#{classId},isAdmin=#{isAdmin}
+		where studentId=#{studentId}
+	</update>
+	
+	<insert id="insertObject">
+		insert into
+		tb_student
+		(<include refid="all"/>)
+		values
+		(#{studentId},#{account},#{name},#{password},#{idCard},
+		#{sex},#{education},#{schoolId},#{professional},#{acceptanceDate},
+		#{birthday},#{status},#{tel},#{secondTel},#{qq},#{email},
+		#{address},#{classId},#{isAdmin})
+	</insert>
+	
+	<select id="findStudentById" resultType="com.student.po.Student">
+		select studentId,account,name,idCard,sex,education,schoolId,professional,
+		acceptanceDate,birthday,status,tel,secondTel,qq,email,address,classId,isAdmin 
+		from tb_student where studentId=#{studentId}
+	</select>
+</mapper>

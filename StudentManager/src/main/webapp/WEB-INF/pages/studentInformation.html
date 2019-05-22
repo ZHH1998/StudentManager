@@ -1,0 +1,323 @@
+<div class="page-content">
+	<div class="content" align="center">
+		<!-- 右侧内容框架，更改从这里开始 -->
+	
+		<div class="layui-form-pane" style="text-align: center;">
+			<div class="layui-form-item" style="display: inline-block;">
+				<label class="layui-form-label xbs768">日期范围</label>
+				<div class="layui-input-inline xbs768">
+					<input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+				</div>
+				<div class="layui-input-inline xbs768">
+					<input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+				</div>
+				<div class="layui-input-inline">
+					<input type="text" name="name" placeholder="请输入用户名"
+						id="searchNameId" class="layui-input">
+				</div>
+				<div class="layui-input-inline" style="width: 80px">
+					<button class="layui-btn"  id="btn-search">
+						<i class="layui-icon">&#xe615;</i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<br/>
+		
+		<button class="layui-btn layui-btn-danger" onclick="delAll()">
+			<i class="layui-icon">&#xe640;</i>批量删除
+		</button>
+
+		<button class="layui-btn"
+			onclick="member_add('添加用户','member-add.html','600','500')">
+			<i class="layui-icon">&#xe608;</i>添加
+		</button>
+
+		<span id="" class="x-right" style="line-height: 40px">共有数据：XX 条</span>
+		</xblock>
+
+		<table class="layui-table" >
+
+			<thead>
+				<tr>
+					<!-- <th>学生编号【后续会隐藏】</th> -->
+					<th><input type="checkbox" id="checkAll"></th>
+					<th>账号</th>
+					<th>名字</th>
+					<th>密码</th>
+					<th>身份证</th>
+					<th>性别</th>
+					<th>学历</th>
+					<th>学校Id</th>
+					<th>专业</th>
+					<th>入学日期</th>
+					<th>出生日期</th>
+					<th>状态</th>
+					<th>电话1</th>
+					<th>电话2</th>
+					<th>QQ</th>
+					<th>邮箱</th>
+					<th>地址</th>
+					<th>班级编号</th>
+					<th>是否管理员</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody id="myInformation_tbodyId">
+				<tr>
+					<td colspan="7">学生的数据正在加载中。。。</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div id="myInformation_pageId" class="box-footer clearfix"></div>
+		<!-- 右侧内容框架，更改从这里结束 -->
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		// 去吧page的页面加载到指定的位置呈现，当这个页面加载完了就进行数据的获取了
+		$("#myInformation_pageId").load("doPageUI.do", function() {
+			// 当page这个页面加载出来了，则我们就要开始为里面的界面填值了
+			doGetObjects();
+		});
+		
+		$("#checkAll").click(doChangeTBodyCheckboxState);
+		$("#myInformation_tbodyId").on("click",".cBox",doChangeTHeadCheckboxState); 	
+		
+		$(".layui-table").on("click","#delete-student-information",doDeleteStudentInformation);
+		$(".layui-table").on("click","#update-student-information",doUpdateStudentInformation);
+		
+		$(".layui-input-inline").on("click","#btn-search",doQueryObjects);
+		
+		// 条件查询按钮添加的时间
+/* 		 $(".input-group-btn").on("click",".btn-search",doQueryObjects);
+		 $(".input-group-btn").on("click",".btn-delete",doDeleteObjects); */
+
+	});
+	function doGetObjects() {
+		$("#checkAll").prop("checked", false); // 每一页的跳转都要将那个全部勾选的选择框去掉
+		var pageCurrent = $("#myInformation_pageId").data("pageCurrent");		
+		if (!pageCurrent) {
+			pageCurrent = 1;
+		}
+		var params = {"pageCurrent" : pageCurrent};
+		var name = $("#searchNameId").val();
+		if(name){
+			params.name=name;
+		}			
+		
+		var url = "student/doFindPageObjects.do";
+
+		// 使用异步加载的方式去加载数据，然后拿到数据显示到界面中
+		$.get(url, params, function(result) {
+			doHandleResponseResult(result);
+		}, "json");
+	};
+
+	// 对数据做呈现,先要通过数据中的状态码做数据的校验
+	function doHandleResponseResult(result) {
+		if (result.state == 1) {
+			doSetTableBodyRows(result.data.records); // 显示的是记录信息
+			doSetPagination(result.data); // 对分页信息做显示
+		} else {
+			alert(result.message);
+		}
+	};
+
+	// 将数据显示到表格中去
+	function doSetTableBodyRows(result) {
+		var tbody = $("#myInformation_tbodyId");
+		tbody.empty(); // 将里面的数据清空
+		for ( var i in result) {
+			//2.1 构建tr对象
+			var tr = $("<tr></tr>");
+			//2.2 构建tds对象
+			var tds = doCreateTds(result[i]);
+			//2.3 将tds追加到tr中
+			tr.append(tds);
+			//2.4 将tr追加到tbody中
+			tbody.append(tr);
+		}
+	};
+	
+	// 点击全选按钮的操作
+	function doChangeTBodyCheckboxState(){
+		var flag = $("#checkAll").prop("checked");
+		$("#myInformation_tbodyId input[name='cItem']").each(function () {
+			$(this).prop("checked",flag);
+		});
+
+		//第二种方案
+		// $("#tbodyId input[type='checkbox']").prop("checked",flag);
+	};
+	
+	function doChangeTHeadCheckboxState(){
+		var flag = true;
+		$("#myInformation_tbodyId input[name='cItem']").each(function(){
+			flag = flag & $(this).prop("checked");
+		});
+		$("#checkAll").prop("checked",flag);
+	};
+	
+	
+	
+	
+	function doCreateTds(data) {
+		var tds = "<td><input type='checkbox' class='cBox' name='cItem' value='"+data.studentId+"'></td>"
+				+ "<td>"
+				+ data.account
+				+ "</td>"
+				+ "<td>"
+				+ data.name
+				+ "</td>"
+				+ "<td>"
+				+ data.password
+				+ "</td>"
+				+ "<td>"
+				+ data.idCard
+				+ "</td>"
+				+ "<td>"
+				+ data.sex
+				+ "</td>"
+				+ "<td>"
+				+ data.education
+				+ "</td>"
+				+ "<td>"
+				+ data.schoolId
+				+ "</td>"
+				+ "<td>"
+				+ data.professional
+				+ "</td>"
+				+ "<td>"
+				+ data.acceptanceDate
+				+ "</td>"
+				+ "<td>"
+				+ data.birthday
+				+ "</td>"
+				+ "<td>"
+				+ data.status
+				+ "</td>"
+				+ "<td>"
+				+ data.tel
+				+ "</td>"
+				+ "<td>"
+				+ data.secondTel
+				+ "</td>"
+				+ "<td>"
+				+ data.qq
+				+ "</td>"
+				+ "<td>"
+				+ data.email
+				+ "</td>"
+				+ "<td>"
+				+ data.address
+				+ "</td>"
+				+ "<td>"
+				+ data.classId
+				+ "</td>"
+				+ "<td>"
+				+ data.isAdmin
+				+ "</td>"
+				+ "<td><a id='update-student-information'><i class='layui-icon'>&#xe642;</i></a><a id='delete-student-information'><i class='layui-icon'>&#xe640;</i></a></td>";
+				
+		return tds;
+	};
+	
+	// 如果是使用条件查询的时候，就要使其从第一页去查询了
+	function doQueryObjects(){
+		$("#myInformation_pageId").data("pageCurrent",1);
+		doGetObjects();
+	};
+	// 删除学生信息
+	function doDeleteStudentInformation(){
+		var ids = doGetCheckedIds();
+		if(ids.length == 0){
+			alert("请至少选择一个进行删除");
+			return;
+		}
+		if(!confirm("确认删除")){
+			return;
+		}
+		var url = "student/doDeleteObjects.do";
+		var params = {"studentIds":ids.toString()};
+		$.post(url,params,function (result) {
+			if(result.state == 1){
+				alert(result.message);
+				// 删除完要进行数据的更新
+				doSetPageCurrent();
+				doGetObjects();
+			}else{
+				alert(result.message);
+			}
+		})
+	}
+	
+	// 更新学生信息
+	function doUpdateStudentInformation(){
+		console.log("gengixn");
+	}
+	
+	// 查找出我们选择了的记录
+	function doGetCheckedIds(){
+		var array = [];
+		$("#myInformation_tbodyId input[type=checkbox]").each(function () {
+			if($(this).prop("checked")){
+				// 将数据放到数组里面去
+				array.push($(this).val());
+			}
+		});
+		return array;
+	};
+	
+	// 如果删除的是最后一页，要返回到上一页
+	function doSetPageCurrent(){
+		var pageCount=$("#myInformation_pageId").data("pageCount");
+		var pageCurrent=$("myInformation_pageId").data("pageCurrent");
+		var checked=$("#checkAll").prop("checked");
+		if(pageCurrent == pageCount && checked && pageCurrent>1){
+			pageCurrent--;
+			$("#myInformation_pageId").data("pageCurrent",pageCurrent);
+		}
+	};
+	
+</script>
+
+<script>
+	layui.use([ 'laydate' ], function() {
+		laydate = layui.laydate;//日期插件
+		var start = {
+			min : '1990-1-1 1:1:1',
+			max : '2099-06-16 23:59:59',
+			istoday : false,
+			choose : function(datas) {
+				end.min = datas; //开始日选好后，重置结束日的最小日期
+				end.start = datas //将结束日的初始值设定为开始日
+			}
+		};
+
+		var end = {
+			min : laydate.now(),
+			max : '2099-06-16 23:59:59',
+			istoday : false,
+			choose : function(datas) {
+				start.max = datas; //结束日选好后，重置开始日的最大日期
+			}
+		};
+
+		document.getElementById('LAY_demorange_s').onclick = function() {
+			start.elem = this;
+			laydate(start);
+		}
+		document.getElementById('LAY_demorange_e').onclick = function() {
+			end.elem = this
+			laydate(end);
+		}
+
+	});
+
+	
+</script>
+
+

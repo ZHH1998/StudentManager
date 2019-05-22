@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.dao.MenuDao">
+	   <select id="findPermissions"
+           resultType="string">
+         select permission
+         from tb_menus
+         where parentId in 
+         <foreach collection="menuIds"
+                  open="("
+                  close=")"
+                  separator=","
+                  item="menuId">
+                  #{menuId}
+        </foreach>        
+   </select>
+   
+   <update id="updateObject">
+        update tb_menus
+         set
+           name=#{name},
+           type=#{type},
+           sort=#{sort},
+           url=#{url},
+           parentId=#{parentId},
+           permission=#{permission}
+        where menuId=#{menuId}
+   </update>
+   
+   <insert id="insertObject">
+      insert into tb_menus
+      (name,url,type,sort,parentId,permission)
+      values
+      (#{name},#{url},#{type},#{sort},#{parentId},#{permission})
+   </insert>
+   
+   
+   <!-- 统计指定id下是有多少子元素 -->
+   <select id="getChildCount"
+           resultType="int">
+        select count(*)
+        from tb_menus
+        where parentId=#{menuId}        
+   </select>
+   
+   <!-- 基于id删除菜单元素 -->
+   <delete id="deleteObject">
+      delete from tb_menus
+        where menuId=#{menuId}
+   </delete>
+   
+   <!-- 查询所有菜单以及对应的上级菜单名称 -->
+   <select id="findObjects" resultType="string">
+        select c.*,p.name parentName
+        from tb_menus c left join tb_menus p
+        on c.parentId=p.menuId
+   </select>
+</mapper>

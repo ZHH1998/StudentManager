@@ -1,0 +1,60 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>写周记</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="./css/font.css">
+<link rel="stylesheet" href="./css/xadmin.css">
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+<script type="text/javascript"
+	src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+<script src="./lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="./js/xadmin.js"></script>
+</head>
+<style>
+body {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.layui-input-block {
+	margin: 0 auto
+}
+</style>
+<body>
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 100px;">
+		<legend align="center">提交周记</legend>
+	</fieldset>
+	<form class="layui-form">
+		<div class="layui-form-item layui-form-text" >
+			<br/><br/><br/><br/><br/><br/><br/><br/>
+			<div class="layui-input-block">
+				<textarea placeholder="写点什么呢?" id="L_sign" name="sign"
+					autocomplete="off" class="layui-textarea" style="height: 300px;"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<button class="layui-btn" type="submit">提交数据</button>
+			<button class="layui-btn" type="button" id = "do-index-ui-id">返回首页</button>
+		</div>
+	</form>
+</body>
+
+<script>
+	$(function(){
+		$(".layui-form-item").on("click","#do-index-ui-id",doIndexUI);
+		
+	});
+	
+	// 返回首页
+	function doIndexUI(){
+		location.href = "doIndexUI.do";
+	}
+	</script>
+</html>

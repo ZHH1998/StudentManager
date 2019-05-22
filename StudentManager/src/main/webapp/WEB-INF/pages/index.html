@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>达内学生管理系统</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link
+	href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800'
+	rel='stylesheet' type='text/css'>
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="./css/font.css">
+<link rel="stylesheet" href="./css/xadmin.css">
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+<script type="text/javascript"
+	src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+<script src="./lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="./js/xadmin.js"></script>
+<!-- start top_js_button -->
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event){		
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+			});
+		});
+	</script>
+<!-- Add fancyBox main JS and CSS files -->
+<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
+<link href="css/magnific-popup.css" rel="stylesheet" type="text/css">
+<script>
+			$(document).ready(function() {
+				$('.popup-with-zoom-anim').magnificPopup({
+					type: 'inline',
+					fixedContentPos: false,
+					fixedBgPos: true,
+					overflowY: 'auto',
+					closeBtnInside: true,
+					preloader: false,
+					midClick: true,
+					removalDelay: 300,
+					mainClass: 'my-mfp-zoom-in'
+			});
+		});
+		</script>
+</head>
+<body>
+	<!-- 顶部开始 -->
+	<div class="container">
+		<div class="logo">
+			<a href="./index.html">显示学生名字</a>
+			<!-- 跳转到首页 -->
+		</div>
+		<div class="open-nav">
+			<i class="iconfont">&#xe699;</i>
+		</div>
+		<ul class="layui-nav right" lay-filter="">
+			<li class="layui-nav-item"><a href="javascript:;">操作</a>
+				<dl class="layui-nav-child">
+					<!-- 二级菜单 -->
+					<dd>
+						<a id="add-personal-data-id" target="_self">完善信息</a>
+					</dd>
+					<dd>
+						<a id="add-weekly-report-id">添加周记</a>
+					</dd>
+					<dd>
+						<a id="add-contract-unit-id">签约单位</a>
+					</dd>
+					<dd>
+						<a id="add-internship-unit-id">实习单位</a>
+					</dd>
+					<dd>
+						<a id="update-password-id" target="_self">修改密码</a>
+					</dd>
+					<dd>
+						<a href="doLogout.do">退出账号</a>
+					</dd>
+				</dl></li>
+			<!-- <li class="layui-nav-item"><a href="/">前台首页</a></li> -->
+		</ul>
+	</div>
+	<!-- 顶部结束 -->
+	<!-- 中部开始 -->
+	<div class="wrapper">
+		<!-- 左侧菜单开始 -->
+		<div class="left-nav">
+			<div id="side-nav">
+				<ul id="nav">
+					<li><a id="index" onclick=doIndex()> <i class="iconfont">&#xe6a7;</i>
+							返回首页
+					</a></li>
+					<li class="list" current><a> <i class="iconfont">&#xe761;</i>
+							学生老师 <i class="iconfont nav_right">&#xe697;</i>
+					</a>
+						<ul class="sub-menu">
+							<li><a id="load-teacherInformation-id"> <i
+									class="iconfont">&#xe6a7;</i> 老师信息
+							</a></li>
+							<li><a id="load-studentInformation-id"> <i
+									class="iconfont">&#xe6a7;</i> 学生信息
+							</a></li>
+
+						</ul></li>
+
+
+
+					<li class="list"><a href="javascript:;"> <i
+							class="iconfont">&#xe70b;</i> 毕业综合 <i class="iconfont nav_right">&#xe697;</i>
+					</a>
+						<ul class="sub-menu">
+							<li><a href="member-list.html"> <i class="iconfont">&#xe6a7;</i>
+									实习单位
+							</a></li>
+							<li><a href="member-del.html"> <i class="iconfont">&#xe6a7;</i>
+									签约单位
+							</a></li>
+							<li><a id="load-intern-weeklydiary-id"> <i
+									class="iconfont">&#xe6a7;</i> 实习周记
+							</a></li>
+							<!-- <li><a href="member-kiss.html"> <i class="iconfont">&#xe6a7;</i>
+									实习报告
+							</a></li> -->
+							<li><a id="load-gradutepaper-id"> <i class="iconfont">&#xe6a7;</i>
+									毕业论文
+							</a></li>
+						</ul></li>
+					<li class="list"><a href="javascript:;"> <i
+							class="iconfont">&#xe6a3;</i> 分类管理 <i class="iconfont nav_right">&#xe697;</i>
+					</a>
+						<ul class="sub-menu">
+							<li><a href="./category.html"> <i class="iconfont">&#xe6a7;</i>
+									分类列表
+							</a></li>
+						</ul></li>
+					<li class="list"><a href="javascript:;"> <i
+							class="iconfont">&#xe70b;</i> 成绩和课表 <i class="iconfont nav_right">&#xe697;</i>
+					</a>
+						<ul class="sub-menu">
+							<!-- course-information.html-->
+							<li><a id="load-courseinformation-id"> <i
+									class="iconfont">&#xe6a7;</i> 课程信息
+							</a></li>
+							<!--score-information.html  -->
+							<li><a id="load-score-information-id"> <i
+									class="iconfont">&#xe6a7;</i> 成绩信息
+							</a></li>
+						</ul></li>
+					<li class="list"><a href="javascript:;"> <i
+							class="iconfont">&#xe6a3;</i> 管理员管理 <i class="iconfont nav_right">&#xe697;</i>
+					</a>
+						<ul class="sub-menu" style="display: none">
+							<li><a href="./banner-list.html"> <i class="iconfont">&#xe6a7;</i>
+									轮播列表
+							</a></li>
+						</ul></li>
+					<li class="list"><a href="javascript:;"> <i
+							class="iconfont">&#xe6a3;</i> 系统统计 <i class="iconfont nav_right">&#xe697;</i>
+					</a>
+						<ul class="sub-menu" style="display: none">
+							<li><a href="./echarts1.html"> <i class="iconfont">&#xe6a7;</i>
+									拆线图
+							</a></li>
+							<li><a href="./echarts2.html"> <i class="iconfont">&#xe6a7;</i>
+									柱状图
+							</a></li>
+							<li><a href="./echarts3.html"> <i class="iconfont">&#xe6a7;</i>
+									地图
+							</a></li>
+							<li><a href="./echarts4.html"> <i class="iconfont">&#xe6a7;</i>
+									饼图
+							</a></li>
+							<li><a href="./echarts5.html"> <i class="iconfont">&#xe6a7;</i>
+									k线图
+							</a></li>
+							<li><a href="./echarts6.html"> <i class="iconfont">&#xe6a7;</i>
+									仪表图
+							</a></li>
+							<li><a href="http://echarts.baidu.com/examples.html"> <i
+									class="iconfont">&#xe6a7;</i> 更多案例
+							</a></li>
+						</ul></li>
+					<li class="list"><a href="javascript:;"> <i
+							class="iconfont">&#xe6a3;</i> 系统设置 <i class="iconfont nav_right">&#xe697;</i>
+					</a>
+						<ul class="sub-menu" style="display: none">
+							<li><a href="./banner-list.html"> <i class="iconfont">&#xe6a7;</i>
+									轮播列表
+							</a></li>
+						</ul></li>
+					<li class="list" current><a> <i class="iconfont">&#xe761;</i>
+							系统信息 <i class="iconfont nav_right">&#xe697;</i>
+					</a>
+						<ul class="sub-menu">
+							<li><a id="load-logInformation-id"> <i class="iconfont">&#xe6a7;</i>
+									日志信息
+							</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+		<!-- 左侧菜单结束 -->
+		<!-- 右侧主体开始 -->
+		<div class="page-content">
+			<div class="content">
+				<!-- 右侧内容框架，更改从这里开始 -->
+				<blockquote class="layui-elem-quote">
+
+					<!-- start header -->
+					<div class="header_bg">
+						<div class="wrap">
+							<div class="header">
+								<div class="logo">
+									<h1>
+										<a href="index.html"><img src="images/logo.png"
+											style="height: 50px; margin-top: -20px;" /></a>
+									</h1>
+								</div>
+								<div class="menu" style="margin-top: -10px;">
+									<ul>
+										<li><a href="#home" class="scroll">Home</a></li>
+										<li><a href="#about" class="scroll">About</a></li>
+										<li><a href="#work" class="scroll">Work</a></li>
+									</ul>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- start slider -->
+					<div class="slider_bg">
+						<div class="wrap">
+							<div class="slider" id="home">
+								<div class="slider_text">
+									<h2>we are bloom</h2>
+									<br />
+									<h3>We do digital & we do it with a difference</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- start main -->
+					<div class="main_bg">
+						<div class="wrap">
+							<div class="main" id="about">
+								<div class="main_text">
+									<h2>the bloom story</h2>
+									<br />
+									<h3>some things you should know about us</h3>
+								</div>
+								<div class="content_bg">
+									<div class="main_pic">
+										<a class="btn" href="#"> from humble beginnings </a>
+									</div>
+								</div>
+								<!-- start tabs_style -->
+								<section class="tabs">
+									<input id="tab-1" type="radio" name="radio-set"
+										class="tab-selector-1" checked="checked" /> <label
+										for="tab-1" class="tab-label-1">history</label> <input
+										id="tab-2" type="radio" name="radio-set"
+										class="tab-selector-2" /> <label for="tab-2"
+										class="tab-label-2">awards</label> <input id="tab-3"
+										type="radio" name="radio-set" class="tab-selector-3" /> <label
+										for="tab-3" class="tab-label-3">philosophy</label>
+
+									<div class="clear-shadow"></div>
+									<div class="content_tab">
+										<div class="content-1">
+											<a class="tab_left">
+												<h2>01. history</h2>
+												<h3>a bit about our past</h3>
+											</a> <a class="tab_right">
+												<p>Lorem Ipsum is simply dummy text of the printing and
+													typesetting industry. Lorem Ipsum has been the industry's
+													standard dummy text ever since the 1500s, when an unknown
+													printer took a galley of type and scrambled it to make a
+													type specimen book</p>
+												<p class="top hide">There are many variations of
+													passages of Lorem Ipsum available, but the majority have
+													suffered alteration in some form, by injected humour, or
+													randomised words which don't look even slightly believable.
+													If you are going to use a passage of Lorem Ipsum, you need
+													to be sure there isn't anything embarrassing hidden in the
+													middle of text. All the Lorem Ipsum generators on the
+													Internet tend to repeat predefined chunks as necessary,
+													making this the first true generator on the Internet.</p>
+											</a>
+											<div class="clear"></div>
+										</div>
+										<div class="content-2">
+											<a class="tab_left">
+												<h2>02. awards</h2>
+												<h3>a bit about our awards</h3>
+											</a> <a class="tab_right">
+												<p>Lorem Ipsum is simply dummy text of the printing and
+													typesetting industry. Lorem Ipsum has been the industry's
+													standard dummy text ever since the 1500s, when an unknown
+													printer took a galley of type and scrambled it to make a
+													type specimen book</p>
+												<p class="top hide">There are many variations of
+													passages of Lorem Ipsum available, but the majority have
+													suffered alteration in some form, by injected humour, or
+													randomised words which don't look even slightly believable.
+													If you are going to use a passage of Lorem Ipsum, you need
+													to be sure there isn't anything embarrassing hidden in the
+													middle of text. All the Lorem Ipsum generators on the
+													Internet tend to repeat predefined chunks as necessary,
+													making this the first true generator on the Internet.</p>
+											</a>
+											<div class="clear"></div>
+										</div>
+										<div class="content-3">
+											<a class="tab_left">
+												<h2>03. philosophy</h2>
+												<h3>a bit our philosophy</h3>
+											</a> <a class="tab_right">
+												<p>Lorem Ipsum is simply dummy text of the printing and
+													typesetting industry. Lorem Ipsum has been the industry's
+													standard dummy text ever since the 1500s, when an unknown
+													printer took a galley of type and scrambled it to make a
+													type specimen book</p>
+												<p class="top hide">There are many variations of
+													passages of Lorem Ipsum available, but the majority have
+													suffered alteration in some form, by injected humour, or
+													randomised words which don't look even slightly believable.
+													If you are going to use a passage of Lorem Ipsum, you need
+													to be sure there isn't anything embarrassing hidden in the
+													middle of text. All the Lorem Ipsum generators on the
+													Internet tend to repeat predefined chunks as necessary,
+													making this the first true generator on the Internet.</p>
+											</a>
+											<div class="clear"></div>
+										</div>
+									</div>
+								</section>
+								<!-- end tabs_style -->
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- start work-page -->
+					<div class="work_bg">
+						<div class="wrap">
+							<div class="work" id="work">
+								<div class="main_text1">
+									<h2>our latest work</h2>
+									<br />
+									<h3>some projects we've worked on of late</h3>
+								</div>
+								<!-- start grids_of_2 -->
+								<div class="grids_of_2">
+									<div class="grid_1_of_2">
+										<div class="grid_pic">
+											<img src="images/pic1.jpg" alt="" />
+										</div>
+										<div class="grid_text">
+											<h2>runner</h2>
+											<p>Lorem Ipsum is simply dummy text of the printing and
+												typesetting industry. Lorem Ipsum has been the industry's
+												standard dummy text ever since the 1500s, when an unknown
+												printer took a galley of type and scrambled.</p>
+										</div>
+									</div>
+									<div class="grid_1_of_2">
+										<div class="grid_pic">
+											<img src="images/pic2.jpg" alt="" />
+										</div>
+										<div class="grid_text">
+											<h2>velo</h2>
+											<p>There are many variations of passages of Lorem Ipsum
+												but the majority have suffered in some form, by injected
+												humour, or randomised words which don't when an unknown
+												printer took look even slightly believable.</p>
+										</div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="grids_of_2">
+									<div class="grid_1_of_2">
+										<div class="grid_pic">
+											<img src="images/pic3.jpg" alt="" />
+										</div>
+										<div class="grid_text">
+											<h2>harriers</h2>
+											<p>There are many variations of passages of Lorem Ipsum
+												but the majority have suffered in some form, by injected
+												humour, or randomised words which don't when an unknown
+												printer took look even slightly believable.</p>
+										</div>
+									</div>
+									<div class="grid_1_of_2">
+										<div class="grid_pic">
+											<img src="images/pic4.jpg" alt="" />
+										</div>
+										<div class="grid_text">
+											<h2>striders</h2>
+											<p>Lorem Ipsum is simply dummy text of the printing and
+												typesetting industry. Lorem Ipsum has been the industry's
+												standard dummy text ever since the 1500s, when an unknown
+												printer took a galley of type and scrambled.</p>
+										</div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<!-- end grids_of_2 -->
+								<div class="wrk_btn">
+									<a class="popup-with-zoom-anim" href="#small-dialog">view
+										more projects</a>
+								</div>
+								<!---start-mfp ---->
+								<div id="small-dialog" class="mfp-hide">
+									<div class="pop_up">
+										<h2>project description</h2>
+										<p class="para">Sed ut perspiciatis unde omnis iste natus
+											error sit voluptatem accusantium doloremque laudantium, totam
+											rem aperiam, eaque ipsa quae ab illo inventore veritatis et
+											quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
+											ipsam voluptatem quia voluptas sit aspernatur aut odit aut
+											fugit, sed quia consequuntur magni dolores eos qui ratione
+											voluptatem sequi nesciunt. Neque porro quisquam est, qui
+											dolorem ipsum quia dolor sit amet.</p>
+										<div class="social-icons">
+											<h3>get in touch</h3>
+											<ul>
+												<li><a href="#" target="_blank"></a></li>
+												<li><a href="#" target="_blank"></a></li>
+												<li><a href="#" target="_blank"></a></li>
+												<li><a href="#" target="_blank"></a></li>
+												<li><a href="#" target="_blank"></a></li>
+											</ul>
+											<div class="clear"></div>
+										</div>
+									</div>
+								</div>
+								<!---end-mfp ---->
+							</div>
+						</div>
+					</div>
+
+
+				</blockquote>
+				<!-- 右侧内容框架，更改从这里结束 -->
+			</div>
+		</div>
+		<!-- 右侧主体结束 -->
+	</div>
+	<!-- 中部结束 -->
+	<!-- 底部开始 -->
+	<div class="footer">
+		<div class="copyright">本系统由深圳宝安中心提供技术支持</div>
+	</div>
+	<!-- 底部结束 -->
+	<!-- 背景切换开始 -->
+	<div class="bg-changer">
+		<div class="swiper-container changer-list">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<img class="item" src="./images/a.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/b.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/c.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/d.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/e.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/f.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/g.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/h.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/i.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/j.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<img class="item" src="./images/k.jpg" alt="">
+				</div>
+				<div class="swiper-slide">
+					<span class="reset">初始化</span>
+				</div>
+			</div>
+		</div>
+		<div class="bg-out"></div>
+		<div id="changer-set">
+			<i class="iconfont">&#xe696;</i>
+		</div>
+	</div>
+	<!-- 背景切换结束 -->
+	<script>
+	
+		function doIndex(){
+			location.href = "doIndexUI.do";
+		}
+		/* 主按钮的页面跳转 */
+		$(function() {
+			loadUI("load-studentInformation-id", "doStudentInformationUI.do");
+			loadUI("load-teacherInformation-id", "doTeacherInformationUI.do");
+			loadUI("load-logInformation-id", "doLogInformationUI.do");
+			loadUI("load-gradutepaper-id", "doGradutePaperUI.do");
+			loadUI("load-intern-weeklydiary-id", "doInternWeeklyDiaryPaperUI.do");			
+			loadUI("load-courseinformation-id","doCourseinFormationUI.do");
+			loadUI("load-score-information-id","doScoreInformationUI.do")
+			
+			
+			
+			
+			$(".layui-nav-child").on("click","#add-personal-data-id",doAddPersonalData);
+			$(".layui-nav-child").on("click","#update-password-id",doUpdatePassword);
+			$(".layui-nav-child").on("click","#add-weekly-report-id",doAddWeeklyReport);
+			$(".layui-nav-child").on("click","#add-contract-unit-id",doAddContractUnit);
+			$(".layui-nav-child").on("click","#add-internship-unit-id",doAddInternshiptUnit);
+			
+		})
+
+		// 加载div类型的界面的重构方法
+		function loadUI(id, url) {
+			$("#" + id).click(function() {
+				// 在指定位置加载页面
+				$(".layui-elem-quote").load(url);
+			})
+		}
+		
+		// 这个是跳转到添加个人的详细信息的页面
+		function doAddPersonalData(){
+			location.href = "doAddPersonalDataUI.do";
+			return false;//防止刷新时重复提交
+		}
+		
+		// 这个是跳转到修改密码的页面
+		function doUpdatePassword(){
+			location.href = "doUpdatePasswordUI.do";
+			return false;//防止刷新时重复提交
+		}
+		
+		// 添加实习周记
+		function doAddWeeklyReport(){
+			location.href = "doAddWeeklyReportUI.do";
+			return false;//防止刷新时重复提交
+		}
+		
+		// 添加签约单位
+		function doAddContractUnit(){
+			location.href = "doAddContractUnitUI.do";
+			return false;//防止刷新时重复提交
+		}
+		
+		function doAddInternshiptUnit(){
+			location.href = "doAddInternshiptUnitUI.do";
+			return false;//防止刷新时重复提交
+		}
+		
+	</script>
+</body>
+</html>
